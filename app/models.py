@@ -9,9 +9,9 @@ class Books(db.Model):
     date = db.Column(db.DateTime)
 
 
-class BooksCrash(db.Model):
+class BooksTrash(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_book = db.Column(db.Integer)
+    book_id = db.Column(db.Integer)
     book_name = db.Column(db.String(50))
     author = db.Column(db.String(50))
     rating = db.Column(db.Integer)

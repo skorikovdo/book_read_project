@@ -1,7 +1,7 @@
 from app import app, db, request, Response
 from datetime import datetime
 import json
-from app.models import Books, BooksCrash
+from app.models import Books, BooksTrash
 
 
 @app.route('/create-book', methods=['POST'])
@@ -29,8 +29,8 @@ def create_book():
                         mimetype='application/json')
 
 
-@app.route('/read-books/', defaults={"book_id": None}, methods=['GET'])
-@app.route('/read-books/<book_id>', methods=['GET'])
+@app.route('/get-books/', defaults={"book_id": None}, methods=['GET'])
+@app.route('/get-books/<book_id>', methods=['GET'])
 def read_book(book_id):
     if request.method == 'GET':
         if book_id:
@@ -87,7 +87,7 @@ def delete_book(book_id):
     if request.method == 'DELETE':
         book = Books.query.filter_by(id=book_id).first()
         Books.query.filter_by(id=book_id).delete()
-        data = BooksCrash(
+        data = BooksTrash(
             book_id=book_id,
             book_name=book.book_name,
             author=book.author,
@@ -99,3 +99,25 @@ def delete_book(book_id):
         db.session.commit()
         return Response(status=204,
                         mimetype='application/json')
+
+
+@app.route('/get-trash', methods=['GET'])
+def read_trash():
+    if request.method == 'GET':
+        trash_resource = BooksTrash.query.all()
+        data = [
+            {
+                "id": trash.id,
+                "book_id": trash.book_id,
+                "book_name": trash.book_name,
+                "author": trash.author,
+                "rating": trash.rating,
+                "date": trash.date.strftime('%Y-%m-%d %H:%M:%S')
+            }
+            for trash in trash_resource]
+        data = {"data": data}
+        print(data)
+        return Response(response=json.dumps(data, ensure_ascii=False),
+                        status=200,
+                        mimetype='application/json')
+
