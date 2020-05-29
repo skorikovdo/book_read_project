@@ -10,4 +10,4 @@ COPY . /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
 ENV FLASK_APP "reading_books.py"
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD flask db upgrade && flask run --host 0.0.0.0
