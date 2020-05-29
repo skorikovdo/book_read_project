@@ -112,12 +112,11 @@ def read_trash():
                 "book_name": trash.book_name,
                 "author": trash.author,
                 "rating": trash.rating,
-                "date": trash.date.strftime('%Y-%m-%d %H:%M:%S')
+                "date": trash.date.strftime("%Y-%m-%d %H:%M:%S")
             }
             for trash in trash_resource]
         data = {"data": data}
         print(data)
         return Response(response=json.dumps(data, ensure_ascii=False),
                         status=200,
-                        mimetype='application/json')
-
+                        mimetype="application/json")
