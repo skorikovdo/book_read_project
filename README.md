@@ -1,5 +1,20 @@
 # book_read_project
 
+###### `Разворачивание проекта`
+1. Клонируем проект
+
+		git clone https://github.com/skorikovdo/book_read_project.git
+
+2. Собираем докер образ
+
+		docker build -t flask book_read_project/
+
+3. Запускаем контейнер
+		
+		docker run -p 5000:5000 flask
+	
+
+
 ###### `API`
 
 **/create-book** - POST запрос, чтобы сохранить новую прочитанную книгу.
